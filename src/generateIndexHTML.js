@@ -1,4 +1,23 @@
-function generateTeam(team) {
+function generateIndexHTML(team) {
+
+  const html = [];
+
+  html.push(team
+    .filter(employee => employee.getRole() === "Manager")
+    .map(manager => generateMANAGER(manager))
+  );
+  html.push(team
+    .filter(employee => employee.getRole() === "Engineer")
+    .map(engineer => generateENGINEER(engineer))
+    .join("")
+  );
+  html.push(team
+    .filter(employee => employee.getRole() === "Intern")
+    .map(intern => generateINTERN(intern))
+    .join("")
+  );
+
+  return html.join("");
 
   function generateMANAGER(manager) {
     return `
@@ -55,38 +74,6 @@ function generateTeam(team) {
     </div>
        `;
   };
-
-
-  const html = [];
-
-  // html.push(team.filter(employee => employee.getRole() === "Manager"))
-  // html.push(team.map(manager => generateMANAGER(manager)))
-  // console.info(team.filter(employee => employee.getRole() === "Manager"));
-  //
-  // html.push(team.filter(employee => employee.getRole() === "Engineer"))
-  // html.push(team.map(engineer => generateENGINEER(engineer)))
-  // console.info(team.filter(employee => employee.getRole() === "Engineer"));
-  //
-  // html.push(team.filter(employee => employee.getRole() === "Intern"))
-  // html.push(team.map(intern => generateINTERN(intern)))
-  // console.info(team.filter(employee => employee.getRole() === "Intern"));
-
-  html.push(team
-    .filter(employee => employee.getRole() === "Manager")
-    .map(manager => generateMANAGER(manager))
-  );
-  html.push(team
-    .filter(employee => employee.getRole() === "Engineer")
-    .map(engineer => generateENGINEER(engineer))
-    .join("")
-  );
-  html.push(team
-    .filter(employee => employee.getRole() === "Intern")
-    .map(intern => generateINTERN(intern))
-    .join("")
-  );
-
-  return html.join("");
 }
 
 module.exports = team => {
@@ -114,7 +101,7 @@ module.exports = team => {
       <div class="container">
           <div class="row">
               <div class="row team-area col-12 d-flex justify-content-center">
-                  ${generateTeam(team)}
+                  ${generateIndexHTML(team)}
               </div>
           </div>
       </div>

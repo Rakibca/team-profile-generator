@@ -3,7 +3,7 @@ var inquirer = require('inquirer');
 // fs is a Node standard library package for reading and writing files
 const fs = require('fs');
 // import and use the generateMarkdown.js module
-const generateTeam = require('./src/generateIndexHTML.js');
+const generateIndexHTML = require('./src/generateIndexHTML.js');
 
 const Employee = require("./lib/Employee.js");
 const Manager = require("./lib/Manager.js");
@@ -141,7 +141,7 @@ function init() {
 
   function writeHTML() {
     console.log("Team created with the following cards shown below:")
-    fs.writeFileSync('index.html', generateTeam(arrayEmployees), "UTF-8")
+    fs.writeFileSync('index.html', generateIndexHTML(arrayEmployees), "UTF-8")
   }
 
 }
