@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+const generateHTML = ({name, id, email, officeNumber}) =>
+  `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,14 +10,17 @@
 <body>
   <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Hi! My name is ewrwe</h1>
-    <p class="lead">I am from ewfrew.</p>
+    <h1 class="display-4">Hi! My name is ${name}</h1>
+    <p class="lead">I am from ${id}.</p>
     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
-      <li class="list-group-item">My GitHub username is asfdas</li>
-      <li class="list-group-item">LinkedIn: asdfas</li>
+      <li class="list-group-item">My GitHub username is ${email}</li>
+      <li class="list-group-item">LinkedIn: ${officeNumber}</li>
     </ul>
   </div>
 </div>
 </body>
-</html>
+</html>`;
+
+
+module.exports = generateHTML;

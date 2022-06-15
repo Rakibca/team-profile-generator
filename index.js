@@ -1,142 +1,152 @@
-const inquirer = require('inquirer');
-const confirm = require('inquirer-confirm');
-const jest = require('jest');
+// packages needed for this application
+var inquirer = require('inquirer');
+// fs is a Node standard library package for reading and writing files
 const fs = require('fs');
+// import and use the generateMarkdown.js module
+const generateHTML = require('./src/generateindex.js');
 
-const Employee = require('./lib/Employee');
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
+const Employee = require("./lib/Employee.js");
+const Manager = require("./lib/Manager.js");
+const Engineer = require("./lib/Engineer.js");
+const Intern = require("./lib/Intern.js");
+
+arrayEmployees = [];
+
+// Function call to initialize app
+//init();
 
 
-const promptManager = () => {
+// Creates a function to initialize app
+
+// Creates an array of questions for user input and to validate the answers
+const managerPrompt = () => {
   return inquirer.prompt([{
-      type: 'input',
-      name: 'nameManager',
-      message: 'What is the name of the Manager?',
+      type: "input",
+      name: "nameManager",
+      message: "What is the name of the manager?"
     },
     {
-      type: 'input',
-      name: 'employeeIDManager',
-      message: 'What is the employee ID of the Manager?',
+      type: "input",
+      name: "idManager",
+      message: "What is the employee ID of the manager?"
     },
     {
-      type: 'input',
-      name: 'emailAddressManager',
-      message: 'What is the email address of the Manager?',
+      type: "input",
+      name: "emailManager",
+      message: "What is the email address of the manager?"
     },
     {
-      type: 'input',
-      name: 'officeNumberManager',
-      message: 'What is the office number of the Manager?',
+      type: "input",
+      name: "officeNumberManager",
+      message: "What is the office phone number of the manager?"
     },
-  ]);
-};
+  ])
+}
 
-const promptThree = () => {
+const choicePrompt = () => {
   return inquirer.prompt([{
-      type: 'checkbox',
-      name: 'reptiles',
-      message: 'Which do you love?',
-      choices: [
-        'Employee', 'Intern', 'All Done',
-      ],
+      type: "expand",
+      name: "employeeType",
+      message: "which employee type would you like to add?",
+      choices: [{
+        key: 'A',
+        value: 'Engineer'
+      }, {
+        key: 'B',
+        value: 'Intern'
+      }, {
+        key: 'C',
+        value: 'No_more_employees'
+      }],
     }, ])
 
     .then(answers => {
-      if (answers.reptiles == 'Employee') {
-        console.info('Answer:', answers.reptiles);
+      //console.info('hurray');
+      //console.info(answers.employeeType);
+      if (answers.employeeType == 'Engineer') {
+        engineerPrompt()
+      } else if (answers.employeeType == 'Intern') {
+        internPrompt()
       } else {
-        console.info("Goodluck");
+        writeHTML()
       }
     });
-};
+}
 
-const promptEngineer = () => {
+
+function engineerPrompt() {
   return inquirer.prompt([{
-      type: 'input',
-      name: 'nameEngineer',
-      message: 'What is the name of the Engineer?',
+      type: "input",
+      name: "nameEngineer",
+      message: "What is the name of the engineer?"
     },
     {
-      type: 'input',
-      name: 'employeeIDEngineer',
-      message: 'What is the employee ID of the Engineer?',
+      type: "input",
+      name: "idEngineer",
+      message: "What is the employee ID of the engineer?"
     },
     {
-      type: 'input',
-      name: 'emailAddressEngineer',
-      message: 'What is the email address of the Engineer?',
+      type: "input",
+      name: "emailEngineer",
+      message: "What is the email address of the engineer?"
     },
     {
-      type: 'input',
-      name: 'githubUsernameEngineer',
-      message: 'What is the GitHub username of the Engineer?',
+      type: "input",
+      name: "githubEngineer",
+      message: "What is the github username of the engineer?"
     },
-  ]);
-};
+  ]).then(answers => {
+    const engineerPerson = new Engineer(answers.nameEngineer, answers.idEngineer, answers.emailEngineer, answers.githubEngineer);
+    arrayEmployees.push(engineerPerson);
+    choicePrompt();
+  });
+}
 
-const promptIntern = () => {
+
+function internPrompt() {
   return inquirer.prompt([{
-      type: 'input',
-      name: 'nameIntern',
-      message: 'What is the name of the Intern?',
+      type: "input",
+      name: "nameIntern",
+      message: "What is the name of the intern?"
     },
     {
-      type: 'input',
-      name: 'employeeIDIntern',
-      message: 'What is the employee ID of the Intern?',
+      type: "input",
+      name: "idIntern",
+      message: "What is the employee ID of the intern?"
     },
     {
-      type: 'input',
-      name: 'emailAddressIntern',
-      message: 'What is the email address of the Intern?',
+      type: "input",
+      name: "emailIntern",
+      message: "What is the email address of the intern?"
     },
     {
-      type: 'input',
-      name: 'schoolIntern',
-      message: 'What is the school of the Intern?',
+      type: "input",
+      name: "schoolIntern",
+      message: "Which school did the intern go to?"
     },
-  ]);
-};
+  ]).then(answers => {
+    const internPerson = new Intern(answers.nameIntern, answers.idIntern, answers.emailIntern, answers.schoolIntern);
+    arrayEmployees.push(internPerson);
+    choicePrompt();
+  });
+}
 
-const generateHTML = ({
-    nameEngineer,
-    employeeIDManager,
-    githubUsernameEngineer,
-    officeNumberManager
-  }) =>
-  `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Hi! My name is ${nameEngineer}</h1>
-    <p class="lead">I am from ${employeeIDManager}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${githubUsernameEngineer}</li>
-      <li class="list-group-item">LinkedIn: ${officeNumberManager}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
 
-const init = () => {
-  //promptManager()
-  //.then(promptEngineer)
-  promptThree()
-    // Use writeFileSync method to use promises instead of a callback function
-    //.then((answers) => fs.writeFileSync('index.html', generateHTML(answers)))
-    //.then(() => console.log('Successfully wrote to index.html'))
-    .catch((err) => console.error(err));
-};
 
-init();
+function writeHTML() {
+  console.info("We made it here");
+}
+
+managerPrompt()
+  .then(choicePrompt)
+  //   .then(engineerPrompt)
+  //   .then(internPrompt)
+  //  .then(teamArray => {
+  //    return generateHTML(teamArray);
+  //  })
+  //  .then(pageHTML => {
+  //    return writeFile(pageHTML);
+  //  })
+  .catch(err => {
+    console.log(err);
+  });
