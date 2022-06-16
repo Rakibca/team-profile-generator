@@ -65,7 +65,6 @@ function init() {
       }, ])
 
       .then(answers => {
-        //console.info('hurray');
         //console.info(answers.employeeType);
         if (answers.employeeType == 'Engineer') {
           engineerPrompt()
