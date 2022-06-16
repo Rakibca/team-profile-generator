@@ -1,22 +1,21 @@
 // packages needed for this application
 var inquirer = require('inquirer');
+var jest = require('jest');
 // fs is a Node standard library package for reading and writing files
 const fs = require('fs');
-// import and use the generateMarkdown.js module
+// import and use generateIndexHTML.js module to create the index.html
 const generateIndexHTML = require('./src/generateIndexHTML.js');
-
+// import class Employee and its sub-classes
 const Employee = require("./lib/Employee.js");
 const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
-
 arrayEmployees = [];
 
 
 init();
 
 function init() {
-
   managerPrompt();
   // Creates an array of questions for user input and to validate the answers
   function managerPrompt() {
@@ -41,7 +40,7 @@ function init() {
         message: "What is the office phone number of the manager?"
       },
     ]).then(answers => {
-      const managerPerson = new Manager(answers.nameManager, answers.idEngineer, answers.emailManager, answers.officeNumberManager);
+      const managerPerson = new Manager(answers.nameManager, answers.idManager, answers.emailManager, answers.officeNumberManager);
       arrayEmployees.push(managerPerson);
       //console.info(arrayEmployees);
       choicePrompt();
@@ -141,7 +140,7 @@ function init() {
 
   function writeHTML() {
     console.log("Team created with the following cards shown below:")
-    fs.writeFileSync('index.html', generateIndexHTML(arrayEmployees), "UTF-8")
+    fs.writeFileSync('./dist/index.html', generateIndexHTML(arrayEmployees), "UTF-8")
   }
 
 }

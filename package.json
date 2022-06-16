@@ -1,14 +1,27 @@
 {
-  "name": "pro-readme-generator",
+  "name": "team-profile-generator",
   "version": "1.0.0",
-  "description": "Professional README Generator",
+  "description": "Team Profile Generator",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^8.2.4"
-  }
+    "inquirer": "^8.2.4",
+    "jest": "^28.1.1"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rakibca/team-profile-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rakibca/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/Rakibca/team-profile-generator#readme"
 }

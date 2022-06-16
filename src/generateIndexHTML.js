@@ -1,23 +1,26 @@
 function generateIndexHTML(team) {
 
-  const html = [];
+  const arrayCards = [];
 
-  html.push(team
+// filtering the array elements related to only Manager and pushes it into a new array
+// called arrayCards. The map functions then generates the HTML for only the managaer card by
+// calling generateMANAGER function based on the contents of the new array arrayCards.
+  arrayCards.push(team
     .filter(employee => employee.getRole() === "Manager")
     .map(manager => generateMANAGER(manager))
   );
-  html.push(team
+  arrayCards.push(team
     .filter(employee => employee.getRole() === "Engineer")
     .map(engineer => generateENGINEER(engineer))
     .join("")
   );
-  html.push(team
+  arrayCards.push(team
     .filter(employee => employee.getRole() === "Intern")
     .map(intern => generateINTERN(intern))
     .join("")
   );
 
-  return html.join("");
+  return arrayCards.join("");
 
   function generateMANAGER(manager) {
     return `
